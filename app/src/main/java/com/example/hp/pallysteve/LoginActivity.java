@@ -3,6 +3,7 @@ package com.example.hp.pallysteve;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,8 +13,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,6 +42,14 @@ public class LoginActivity extends AppCompatActivity {
         userEmail = findViewById(R.id.user_email);
         userPassword = findViewById(R.id.user_password);
         signInBtn = findViewById(R.id.sign_btn);
+        signInBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setUpFirebaseAuth();
+            }
+        });
+
+
         createAcct = findViewById(R.id.create_account_here);
         createAcct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +69,22 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void setUpFirebaseAuth() {
+        stateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if(user != null){
+                    mAuth.signOut();
+                    Toast.makeText(LoginActivity.this, "User signed in already", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(LoginActivity.this, "User is curently inactive", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
     }
 
     private void verifyCredentials(String email, String password) {
@@ -86,11 +116,33 @@ public class LoginActivity extends AppCompatActivity {
         if(verifiedEmail == true && verifiedPassword == true){
 
 //            AsyncBackground work = new AsyncBackground();
-//            work.execute(email)
+//            work.execute(email);
+            progressDialog.show();
+            signInUser(email, password);
 
         }
     }
 
+    public void signInUser(String email, String password){
+        progressDialog.show();
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
+                new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Toast.makeText(LoginActivity.this, "Login Succesful", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+                }
+        ).addOnFailureListener
+                (new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                     Toast.makeText(LoginActivity.this, "An error occured! \n" +
+                             e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+        });
+    }
 
 
 

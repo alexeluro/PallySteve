@@ -7,6 +7,9 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.KeyboardShortcutGroup;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,10 +19,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Tab1.OnFragmentInteractionListener,
         Tab2.OnFragmentInteractionListener, Tab3.OnFragmentInteractionListener{
+
+
+//    ArrayList<String> companyList = new ArrayList<>();
+
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +40,15 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+//        recyclerView = findViewById(R.id.recycler_view);
+
+
         final TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Tab1"));
         tabLayout.addTab(tabLayout.newTab().setText("Tab2"));
         tabLayout.addTab(tabLayout.newTab().setText("Tab3"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
         final ViewPager viewPager = findViewById(R.id.view_pager);
@@ -77,6 +94,9 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+
+
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -85,6 +105,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+
     }
 
     @Override
@@ -115,18 +136,27 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
+        if (id == R.id.nav_find_a_job) {
+            // Handles the find a job action
+            Toast.makeText(this, "Find a Job", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_job_match) {
+            // Handles the job matching action
+            Toast.makeText(this, "Job Match", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_profile) {
+            // Handles the profile action
+            Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_settings) {
+//            Handles the Settings action
+            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+//            Handles the Share action
+            Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_about) {
+//            Handles the About action
+            Toast.makeText(this, "About", Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.nav_logout){
+//            Handles the logout action
+            Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
