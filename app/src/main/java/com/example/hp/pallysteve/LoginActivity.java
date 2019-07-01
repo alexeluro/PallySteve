@@ -31,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener stateListener;
+    private String email;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +44,17 @@ public class LoginActivity extends AppCompatActivity {
         userEmail = findViewById(R.id.user_email);
         userPassword = findViewById(R.id.user_password);
         signInBtn = findViewById(R.id.sign_btn);
+
+
+
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                email = userEmail.getText().toString().trim();
+                password = userPassword.getText().toString().trim();
+
                 setUpFirebaseAuth();
+                verifyCredentials(email, password);
             }
         });
 
@@ -56,16 +65,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(intent);
-                finish();
+//                finish();
             }
         });
         forgotPassword = findViewById(R.id.forgot_password_txt);
         progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
 
-        String email = userEmail.getText().toString().trim();
-        String password = userPassword.getText().toString().trim();
 
-        verifyCredentials(email, password);
+
 
 
 
@@ -88,49 +96,94 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void verifyCredentials(String email, String password) {
-            Boolean verifiedEmail = false;
-            Boolean verifiedPassword = false;
+        progressDialog.setMessage("Verifying User Inputs");
+        progressDialog.show();
+        Boolean verifiedEmail = false;
+        Boolean verifiedPassword = false;
 
         //check if email emailField is empty
         if(TextUtils.isEmpty(email)){
+            progressDialog.dismiss();
             Toast.makeText(this, "Input email", Toast.LENGTH_SHORT).show();
+        }else{
+            // check if email ends with @gmail.com or @yahoo.com
+            if(email.endsWith("@gmail.com") || email.endsWith("@yahoo.com")){
+                verifiedEmail = true;
+            }else{
+                progressDialog.dismiss();
+                Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show();
+            }
+
         }
         // check if passwordField is empty
         if(TextUtils.isEmpty(password)){
+            progressDialog.dismiss();
             Toast.makeText(this, "Input password", Toast.LENGTH_SHORT).show();
-        }
-        // check if email ends with @gmail.com or @yahoo.com
-        if(email.endsWith("@gmail.com") || email.endsWith("@yahoo.com")){
-            verifiedEmail = true;
         }else{
-            Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show();
+            // check if password is long enough
+            if(password.length() >= 6){
+                verifiedPassword = true;
+
+            }else {
+                progressDialog.dismiss();
+                Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show();
+                verifiedPassword = false;
+            }
         }
-        // check if password is long enough
-        if(password.length() >= 6){
-            verifiedPassword = true;
-        }else {
-            Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show();
-        }
+
+
 
         // proceed to the firebase authentication
         if(verifiedEmail == true && verifiedPassword == true){
+            progressDialog.setMessage("email status: valid \npassword status: valid");
+            FirebaseUser user = mAuth.getCurrentUser();
 
 //            AsyncBackground work = new AsyncBackground();
 //            work.execute(email);
-            progressDialog.show();
             signInUser(email, password);
-
         }
     }
 
-    public void signInUser(String email, String password){
-        progressDialog.show();
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        mAuth.addAuthStateListener(stateListener);
+//    }
+
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        if(stateListener != null){
+//            mAuth.removeAuthStateListener(stateListener);
+//        }
+//    }
+
+    public void signInUser(final String email, String password){
+        progressDialog.setMessage("Signing you in...");
+
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Toast.makeText(LoginActivity.this, "Login Succesful", Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
+
+                        if(task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if(user.isEmailVerified()){
+                                progressDialog.setMessage("email verified!");
+                                Toast.makeText(LoginActivity.this, "Login Succesful", Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                progressDialog.setMessage("Email hasn't been verified");
+                                progressDialog.dismiss();
+                                Toast.makeText(LoginActivity.this, "Verify your email", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }else{
+                            Toast.makeText(LoginActivity.this, "Account doesnt exist", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
         ).addOnFailureListener
@@ -138,8 +191,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         progressDialog.dismiss();
-                     Toast.makeText(LoginActivity.this, "An error occured! \n" +
-                             e.getMessage(), Toast.LENGTH_LONG).show();
+                     Toast.makeText(LoginActivity.this, "An error occured! \nPoor Internet connection", Toast.LENGTH_LONG).show();
                     }
         });
     }

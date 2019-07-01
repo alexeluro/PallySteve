@@ -1,7 +1,9 @@
 package com.example.hp.pallysteve;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -21,6 +23,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +37,8 @@ public class MainActivity extends AppCompatActivity
 //    ArrayList<String> companyList = new ArrayList<>();
 
     RecyclerView recyclerView;
-
+    FirebaseAuth mAuth;
+    FirebaseAuth.AuthStateListener stateListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +46,16 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mAuth = FirebaseAuth.getInstance();
+        stateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = mAuth.getCurrentUser();
+                if (user == null) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                }
+            }
+        };
 
 //        recyclerView = findViewById(R.id.recycler_view);
 
@@ -145,6 +161,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_profile) {
             // Handles the profile action
             Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_settings) {
 //            Handles the Settings action
             Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
@@ -157,6 +175,10 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.nav_logout){
 //            Handles the logout action
             Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            mAuth.signOut();
+            this.finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
