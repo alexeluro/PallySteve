@@ -11,6 +11,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyboardShortcutGroup;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -25,6 +26,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +40,17 @@ public class MainActivity extends AppCompatActivity
         Tab2.OnFragmentInteractionListener, Tab3.OnFragmentInteractionListener{
 
 
+    final String TAG = "MainActivity";
+
 //    ArrayList<String> companyList = new ArrayList<>();
 
     RecyclerView recyclerView;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener stateListener;
+    FirebaseDatabase database;
+    DatabaseReference dataref;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +68,25 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         };
+
+        database = FirebaseDatabase.getInstance();
+        dataref = database.getReference("User Info");
+        dataref.setValue("Whatever you want to add to the database");
+        dataref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // This is called when a value in the database is changed
+                String value = dataSnapshot.getValue(String.class);
+                Log.d(TAG, "Value is: "+ value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // This is called when it fails to read the data
+
+            }
+        });
+
 
 //        recyclerView = findViewById(R.id.recycler_view);
 

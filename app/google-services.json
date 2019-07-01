@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "2452135927-kstqqp4cdbs8vl90g7gjt7aol841h77b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hp.pallysteve",
+            "certificate_hash": "3bc6b4646511454888a5e19b72a1b845d2f7420c"
+          }
+        },
+        {
           "client_id": "2452135927-em0tob93p3vl27h8tjvp6lebfj0bl3da.apps.googleusercontent.com",
           "client_type": 3
         }

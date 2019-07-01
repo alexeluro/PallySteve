@@ -31,7 +31,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.hp.pallysteve.LoginActivity" />
         </activity>
-        <activity android:name=".ProfileActivity"
+        <activity
+            android:name=".ProfileActivity"
             android:label="ProfileActivity"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -39,6 +40,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.hp.pallysteve.LoginActivity" />
         </activity>
+        <activity android:name=".AdminActivity"></activity>
     </application>
 
 </manifest>
