@@ -18,11 +18,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     Context context;
     ArrayList<String> locationList = new ArrayList<>();
     ArrayList<String> companyList = new ArrayList<>();
-    ArrayList<String> salaryList = new ArrayList<>();
+    ArrayList<Integer> salaryList = new ArrayList<>();
     ArrayList<String> roleList = new ArrayList<>();
 
+    public CustomAdapter(){}
+
+    public CustomAdapter(Context context){
+        this.context = context;
+    }
+
     public CustomAdapter(Context context, ArrayList<String> companyList,
-                         ArrayList<String> locationList, ArrayList<String> salaryList,
+                         ArrayList<String> locationList, ArrayList<Integer> salaryList,
                          ArrayList<String> roleList) {
         this.context = context;
         this.locationList = locationList;

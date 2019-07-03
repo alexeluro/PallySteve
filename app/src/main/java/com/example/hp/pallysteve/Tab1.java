@@ -31,7 +31,7 @@ public class Tab1 extends Fragment {
     //  Sample list of data required for this app
     ArrayList<String> companyList = new ArrayList<>();
     ArrayList<String> locationList = new ArrayList<>();
-    ArrayList<String> salaryList = new ArrayList<>();
+    ArrayList<Integer> salaryList = new ArrayList<>();
     ArrayList<String> roleList = new ArrayList<>();
 
 
@@ -81,9 +81,8 @@ public class Tab1 extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_tab1, container, false);
 
         recyclerView = rootView.findViewById(R.id.recycler_view);
-        addToList();
-        CustomAdapter customAdapter = new CustomAdapter(getContext(), companyList,
-                locationList, salaryList, roleList);
+//        addToList();
+        CustomAdapter customAdapter = new CustomAdapter(getContext());
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -108,29 +107,18 @@ public class Tab1 extends Fragment {
         }
     }
 
-    private void addToList() {
-        companyList.add("Nestle");
-        companyList.add("Andela Nigeria");
-        companyList.add("NNPC");
-        companyList.add("FAAN");
-
-        locationList.add("Lagos");
-        locationList.add("Lagos");
-        locationList.add("Lagos");
-        locationList.add("Lagos");
-
-        salaryList.add("50,000-150,000");
-        salaryList.add("150,000-200,000");
-        salaryList.add("200,000-250,000");
-        salaryList.add("5,000-30,000");
-
-        roleList.add("Branch Manager");
-        roleList.add("Android Developer");
-        roleList.add("Human Resources Manager");
-        roleList.add("Contract Staff");
-
-
-    }
+//    private void addToList() {
+//        UserInfo info = new UserInfo();
+//        companyList.add(info.getCompanyName());
+//
+//        locationList.add(info.getLocation());
+//
+//        salaryList.add(info.getSalary());
+//
+//        roleList.add(info.getJobRole());
+//
+//
+//    }
 
     @Override
     public void onDetach() {

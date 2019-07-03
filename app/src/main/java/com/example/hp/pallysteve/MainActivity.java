@@ -2,8 +2,10 @@ package com.example.hp.pallysteve;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.solver.widgets.Snapshot;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity
 
 //    ArrayList<String> companyList = new ArrayList<>();
 
+    String userId;
+
     RecyclerView recyclerView;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener stateListener;
@@ -69,13 +73,19 @@ public class MainActivity extends AppCompatActivity
             }
         };
 
+        FirebaseUser user = mAuth.getCurrentUser();
+//        userId = user.getUid();
+
         database = FirebaseDatabase.getInstance();
         dataref = database.getReference("User Info");
-        dataref.setValue("Whatever you want to add to the database");
+//        dataref.setValue("Whatever you want to add to the database");
         dataref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This is called when a value in the database is changed
+//                SyncData sync = new SyncData();
+//                sync.execute();
+                showData(dataSnapshot);
                 String value = dataSnapshot.getValue(String.class);
                 Log.d(TAG, "Value is: "+ value);
             }
@@ -141,6 +151,21 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    public void showData(DataSnapshot dataSnapshot){
+        CustomAdapter customAdapter = new CustomAdapter();
+        for (DataSnapshot data : dataSnapshot.getChildren()){
+            UserInfo info = new UserInfo();
+            info.setCompanyName(data.getValue(UserInfo.class).getCompanyName());
+            info.setJobRole(data.getValue(UserInfo.class).getJobRole());
+            info.setLocation(data.getValue(UserInfo.class).getLocation());
+            info.setSalary(data.getValue(UserInfo.class).getSalary());
+
+            customAdapter.companyList.add(data.getValue(UserInfo.class).getCompanyName());
+            customAdapter.roleList.add(data.getValue(UserInfo.class).getJobRole());
+            customAdapter.locationList.add(data.getValue(UserInfo.class).getLocation());
+            customAdapter.salaryList.add(data.getValue(UserInfo.class).getSalary());
+        }
+    }
 
 
 
@@ -221,4 +246,16 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    public class SyncData extends AsyncTask<Void, String, String>{
+
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+
+            return null;
+        }
+    }
+
 }
