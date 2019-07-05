@@ -11,11 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
     Context context;
+    FirebaseDatabase mdatabase;
     ArrayList<String> locationList = new ArrayList<>();
     ArrayList<String> companyList = new ArrayList<>();
     ArrayList<Integer> salaryList = new ArrayList<>();
@@ -25,6 +27,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
     public CustomAdapter(Context context){
         this.context = context;
+    }
+
+    public CustomAdapter(FirebaseDatabase database){
+        mdatabase = database;
     }
 
     public CustomAdapter(Context context, ArrayList<String> companyList,
@@ -47,10 +53,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder customViewHolder, int i) {
-        customViewHolder.location.setText(locationList.get(i));
         customViewHolder.companyName.setText(companyList.get(i));
-        customViewHolder.salary.setText(salaryList.get(i));
         customViewHolder.role.setText(roleList.get(i));
+        customViewHolder.location.setText(locationList.get(i));
+        customViewHolder.salary.setText(salaryList.get(i));
         Glide.with(context).load(R.drawable.ic_menu_gallery).into(customViewHolder.companyLogo);
         customViewHolder.detailsBtn.setOnClickListener(new View.OnClickListener() {
             @Override

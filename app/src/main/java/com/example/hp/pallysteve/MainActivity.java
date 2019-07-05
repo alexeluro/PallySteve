@@ -77,25 +77,26 @@ public class MainActivity extends AppCompatActivity
 //        userId = user.getUid();
 
         database = FirebaseDatabase.getInstance();
-        dataref = database.getReference("User Info");
+        dataref = database.getReference();
+//        dataref.keepSynced(true);
 //        dataref.setValue("Whatever you want to add to the database");
-        dataref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // This is called when a value in the database is changed
-//                SyncData sync = new SyncData();
-//                sync.execute();
-                showData(dataSnapshot);
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: "+ value);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // This is called when it fails to read the data
-
-            }
-        });
+//        dataref.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                // This is called when a value in the database is changed
+////                SyncData sync = new SyncData();
+////                sync.execute();
+////                showData(dataSnapshot);
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                // This is called when it fails to read the data
+//
+//            }
+//        });
 
 
 //        recyclerView = findViewById(R.id.recycler_view);
@@ -151,21 +152,21 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void showData(DataSnapshot dataSnapshot){
-        CustomAdapter customAdapter = new CustomAdapter();
-        for (DataSnapshot data : dataSnapshot.getChildren()){
-            UserInfo info = new UserInfo();
-            info.setCompanyName(data.getValue(UserInfo.class).getCompanyName());
-            info.setJobRole(data.getValue(UserInfo.class).getJobRole());
-            info.setLocation(data.getValue(UserInfo.class).getLocation());
-            info.setSalary(data.getValue(UserInfo.class).getSalary());
-
-            customAdapter.companyList.add(data.getValue(UserInfo.class).getCompanyName());
-            customAdapter.roleList.add(data.getValue(UserInfo.class).getJobRole());
-            customAdapter.locationList.add(data.getValue(UserInfo.class).getLocation());
-            customAdapter.salaryList.add(data.getValue(UserInfo.class).getSalary());
-        }
-    }
+//    public void showData(DataSnapshot dataSnapshot){
+//        CustomAdapter customAdapter = new CustomAdapter();
+//        for (DataSnapshot data : dataSnapshot.getChildren()){
+//            UserInfo info = new UserInfo();
+//            info.setCompanyName(data.getValue(UserInfo.class).getCompanyName());
+//            info.setJobRole(data.getValue(UserInfo.class).getJobRole());
+//            info.setLocation(data.getValue(UserInfo.class).getLocation());
+//            info.setSalary(data.getValue(UserInfo.class).getSalary());
+//
+//            customAdapter.companyList.add(data.getValue(UserInfo.class).getCompanyName());
+//            customAdapter.roleList.add(data.getValue(UserInfo.class).getJobRole());
+//            customAdapter.locationList.add(data.getValue(UserInfo.class).getLocation());
+//            customAdapter.salaryList.add(data.getValue(UserInfo.class).getSalary());
+//        }
+//    }
 
 
 
@@ -222,6 +223,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
 //            Handles the Settings action
             Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
 //            Handles the Share action
             Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();

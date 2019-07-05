@@ -3,12 +3,19 @@ package com.example.hp.pallysteve;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -34,6 +41,8 @@ public class Tab1 extends Fragment {
     ArrayList<Integer> salaryList = new ArrayList<>();
     ArrayList<String> roleList = new ArrayList<>();
 
+    FirebaseDatabase database;
+    DatabaseReference databaseRef;
 
 
     // TODO: Rename and change types of parameters
@@ -46,14 +55,7 @@ public class Tab1 extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Tab1.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static Tab1 newInstance(String param1, String param2) {
         Tab1 fragment = new Tab1();
@@ -80,13 +82,47 @@ public class Tab1 extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_tab1, container, false);
 
+        database = FirebaseDatabase.getInstance();
+        databaseRef = database.getReference();
         recyclerView = rootView.findViewById(R.id.recycler_view);
-//        addToList();
-        CustomAdapter customAdapter = new CustomAdapter(getContext());
-        recyclerView.setAdapter(customAdapter);
+        final CustomAdapter customAdapter = new CustomAdapter(getContext());
+
+
+        databaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                showData(dataSnapshot);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return rootView;
+    }
+
+    private void showData(DataSnapshot dataSnapshot) {
+        CustomAdapter customAdapter = new CustomAdapter();
+        for(DataSnapshot data : dataSnapshot.getChildren()){
+            UserInfo info = new UserInfo();
+            info.setCompanyName(data.getValue(UserInfo.class).getCompanyName());
+            info.setJobRole(data.getValue(UserInfo.class).getJobRole());
+            info.setLocation(data.getValue(UserInfo.class).getLocation());
+            info.setSalary(data.getValue(UserInfo.class).getSalary());
+
+            customAdapter.companyList.add(data.getValue(UserInfo.class).getCompanyName());
+            customAdapter.roleList.add(data.getValue(UserInfo.class).getJobRole());
+            customAdapter.locationList.add(data.getValue(UserInfo.class).getLocation());
+            customAdapter.salaryList.add(data.getValue(UserInfo.class).getSalary());
+
+        }
+        CustomAdapter adapter = new CustomAdapter(getContext(), companyList, locationList, salaryList, roleList);
+        recyclerView.setAdapter(adapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
