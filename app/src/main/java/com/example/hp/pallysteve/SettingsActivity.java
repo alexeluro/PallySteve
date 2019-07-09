@@ -5,11 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Switch;
+import android.support.v7.widget.SwitchCompat;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    Switch notificationSwitch, loginSwitch;
+    SwitchCompat notificationSwitch, loginSwitch;
     Boolean notificationState, loginState;
     SharedPreferences pref;
 
@@ -22,8 +22,8 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         pref = getSharedPreferences("PREF", 0);
-        notificationState = pref.getBoolean("NotificationSwitch", false);
-        loginState = pref.getBoolean("LoginSwitch", false);
+        notificationState = pref.getBoolean("notificationSwitch", false);
+        loginState = pref.getBoolean("loginSwitch", false);
 
         notificationSwitch = findViewById(R.id.notification_switch);
         loginSwitch = findViewById(R.id.login_status);
@@ -37,7 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
                 notificationState = !notificationState;
                 notificationSwitch.setChecked(notificationState);
                 SharedPreferences.Editor editor = pref.edit();
-                editor.putBoolean("notification", notificationState);
+                editor.putBoolean("notificationSwitch", notificationState);
                 editor.apply();
             }
         });
@@ -48,7 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
                 loginState = !loginState;
                 loginSwitch.setChecked(loginState);
                 SharedPreferences.Editor editor = pref.edit();
-                editor.putBoolean("login", loginState);
+                editor.putBoolean("loginSwitch", loginState);
                 editor.apply();
             }
         });

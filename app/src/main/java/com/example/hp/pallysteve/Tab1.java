@@ -38,7 +38,7 @@ public class Tab1 extends Fragment {
     //  Sample list of data required for this app
     ArrayList<String> companyList = new ArrayList<>();
     ArrayList<String> locationList = new ArrayList<>();
-    ArrayList<Integer> salaryList = new ArrayList<>();
+    ArrayList<String> salaryList = new ArrayList<>();
     ArrayList<String> roleList = new ArrayList<>();
 
     FirebaseDatabase database;
@@ -101,27 +101,27 @@ public class Tab1 extends Fragment {
             }
         });
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         return rootView;
     }
 
     private void showData(DataSnapshot dataSnapshot) {
-        CustomAdapter customAdapter = new CustomAdapter();
+        CustomAdapter customAdapter;
         for(DataSnapshot data : dataSnapshot.getChildren()){
             UserInfo info = new UserInfo();
             info.setCompanyName(data.getValue(UserInfo.class).getCompanyName());
             info.setJobRole(data.getValue(UserInfo.class).getJobRole());
             info.setLocation(data.getValue(UserInfo.class).getLocation());
-            info.setSalary(data.getValue(UserInfo.class).getSalary());
+            info.setMinSalary(data.getValue(UserInfo.class).getMinSalary());
+            info.setMaxSalary(data.getValue(UserInfo.class).getMaxSalary());
 
-            customAdapter.companyList.add(data.getValue(UserInfo.class).getCompanyName());
-            customAdapter.roleList.add(data.getValue(UserInfo.class).getJobRole());
-            customAdapter.locationList.add(data.getValue(UserInfo.class).getLocation());
-            customAdapter.salaryList.add(data.getValue(UserInfo.class).getSalary());
+            companyList.add(data.getValue(UserInfo.class).getCompanyName());
+            roleList.add(data.getValue(UserInfo.class).getJobRole());
+            locationList.add(data.getValue(UserInfo.class).getLocation());
+            salaryList.add((data.getValue(UserInfo.class).getMinSalary() +"-"+ data.getValue(UserInfo.class).getMaxSalary()));
 
         }
         CustomAdapter adapter = new CustomAdapter(getContext(), companyList, locationList, salaryList, roleList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
     }
 

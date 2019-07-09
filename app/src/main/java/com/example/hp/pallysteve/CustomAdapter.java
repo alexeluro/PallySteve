@@ -17,10 +17,10 @@ import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
     Context context;
-    FirebaseDatabase mdatabase;
+//    FirebaseDatabase mdatabase;
     ArrayList<String> locationList = new ArrayList<>();
     ArrayList<String> companyList = new ArrayList<>();
-    ArrayList<Integer> salaryList = new ArrayList<>();
+    ArrayList<String> salaryList = new ArrayList<>();
     ArrayList<String> roleList = new ArrayList<>();
 
     public CustomAdapter(){}
@@ -29,12 +29,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         this.context = context;
     }
 
-    public CustomAdapter(FirebaseDatabase database){
-        mdatabase = database;
-    }
-
     public CustomAdapter(Context context, ArrayList<String> companyList,
-                         ArrayList<String> locationList, ArrayList<Integer> salaryList,
+                         ArrayList<String> locationList, ArrayList<String> salaryList,
                          ArrayList<String> roleList) {
         this.context = context;
         this.locationList = locationList;

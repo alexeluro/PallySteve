@@ -4,7 +4,8 @@ public class UserInfo {
     private String companyName;
     private String jobRole;
     private String location;
-    private Integer salary;
+    private Integer minSalary;
+    private Integer maxSalary;
 
     public UserInfo(){
 
@@ -34,11 +35,19 @@ public class UserInfo {
         this.location = location;
     }
 
-    public Integer getSalary() {
-        return salary;
+    public Integer getMinSalary() {
+        return minSalary;
     }
 
-    public void setSalary(Integer salary) {
-        this.salary = salary;
+    public void setMinSalary(Integer minSalary) {
+        this.minSalary = minSalary;
+    }
+
+    public Integer getMaxSalary() {
+        return maxSalary;
+    }
+
+    public void setMaxSalary(Integer maxSalary) {
+        this.maxSalary = maxSalary;
     }
 }
