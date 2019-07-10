@@ -56,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
                 if(email.matches("admin@pallysteve.com") && password.matches("admin@pallysteve.com")){
                     Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
                     startActivity(intent);
-                    finish();
                 }else {
                     setUpFirebaseAuth();
                     verifyCredentials(email, password);
@@ -188,6 +187,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
 
                         }else{
+                            progressDialog.dismiss();
                             Toast.makeText(LoginActivity.this, "Account doesnt exist", Toast.LENGTH_SHORT).show();
                         }
                     }

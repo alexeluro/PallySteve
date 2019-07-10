@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.constraint.solver.widgets.Snapshot;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,7 +46,8 @@ public class MainActivity extends AppCompatActivity
 
     final String TAG = "MainActivity";
 
-//    ArrayList<String> companyList = new ArrayList<>();
+    TextView loginEmail, loginDisplayname;
+    public static String userEmailText, userDisplayNameText;
 
     String userId;
 
@@ -73,34 +76,27 @@ public class MainActivity extends AppCompatActivity
             }
         };
 
+        loginEmail = findViewById(R.id.login_email);
+        loginDisplayname = findViewById(R.id.login_name);
+
         FirebaseUser user = mAuth.getCurrentUser();
+
+
+
+//        if(user.getEmail() == null){
+//            loginEmail.setText("No signed-in User");
+//        }else {
+//            loginEmail.setText(user.getEmail());
+//        }
+//        if(user.getDisplayName() == null){
+//            loginDisplayname.setText("No Display Name set");
+//        }else {
+//            loginDisplayname.setText(user.getDisplayName());
+//        }
 //        userId = user.getUid();
 
         database = FirebaseDatabase.getInstance();
         dataref = database.getReference();
-//        dataref.keepSynced(true);
-//        dataref.setValue("Whatever you want to add to the database");
-
-//        dataref.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                // This is called when a value in the database is changed
-////                SyncData sync = new SyncData();
-////                sync.execute();
-////                showData(dataSnapshot);
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                // This is called when it fails to read the data
-//
-//            }
-//        });
-
-
-//        recyclerView = findViewById(R.id.recycler_view);
-
 
         final TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Tab1"));

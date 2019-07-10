@@ -1,6 +1,7 @@
 package com.example.hp.pallysteve;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -58,6 +59,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "details", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, DetailsActivity.class);
+                context.startActivity(intent);
             }
         });
     }
@@ -75,7 +78,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         ImageView companyLogo;
         TextView detailsBtn;
 
-        public CustomViewHolder(@NonNull View itemView) {
+        public CustomViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             companyLogo = itemView.findViewById(R.id.company_logo);
@@ -84,6 +87,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             salary = itemView.findViewById(R.id.salary_txt);
             role = itemView.findViewById(R.id.role_txt);
             detailsBtn = itemView.findViewById(R.id.details_btn);
+
+
 
         }
     }
