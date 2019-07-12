@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminActivity">
+    tools:context=".AdminHome">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -12,30 +12,34 @@
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
-            app:contentScrim="@color/colorPrimary">
+            android:layout_height="wrap_content">
 
             <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/admin_toolbar"
-                app:layout_collapseMode="pin">
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/admin_home_toolbar">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PallySteve| Admin"
-                    android:textSize="20sp"
-                    android:textColor="@color/whiteText"/>
+                    android:text="You are an admin"
+                    android:textAllCaps="true"
+                    android:textColor="@color/whiteText" />
 
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
+        <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/admin_tab_layout">
+
+        </android.support.design.widget.TabLayout>
+
     </android.support.design.widget.AppBarLayout>
 
     <include
-        layout="@layout/admin_input"/>
+        layout="@layout/admin_home_include"/>
 
 </android.support.design.widget.CoordinatorLayout>

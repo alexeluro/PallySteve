@@ -25,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     final String TAG = "MainActivity";
 
     TextView loginEmail, loginDisplayname;
+    ImageView userImage;
     public static String userEmailText, userDisplayNameText;
 
     String userId;
@@ -78,6 +80,15 @@ public class MainActivity extends AppCompatActivity
 
         loginEmail = findViewById(R.id.login_email);
         loginDisplayname = findViewById(R.id.login_name);
+        userImage = findViewById(R.id.user_image);
+
+        userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
         FirebaseUser user = mAuth.getCurrentUser();
 
@@ -246,6 +257,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
+    // Async class for the background work
     public class SyncData extends AsyncTask<Void, String, String>{
 
 

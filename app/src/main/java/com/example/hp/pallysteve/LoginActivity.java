@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                 password = userPassword.getText().toString().trim();
 
                 if(email.matches("admin@pallysteve.com") && password.matches("admin@pallysteve.com")){
-                    Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, AdminHome.class);
                     startActivity(intent);
                 }else {
                     setUpFirebaseAuth();

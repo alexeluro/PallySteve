@@ -41,15 +41,6 @@
                 android:value="com.example.hp.pallysteve.MainActivity" />
         </activity>
         <activity
-            android:name=".AdminActivity"
-            android:label="AdminActivity"
-            android:parentActivityName=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.hp.pallysteve.MainActivity" />
-        </activity>
-        <activity
             android:name=".SettingsActivity"
             android:label="SettingsActivity"
             android:parentActivityName=".MainActivity"
@@ -58,13 +49,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.hp.pallysteve.MainActivity" />
         </activity>
-        <activity android:name=".DetailsActivity"
+        <activity
+            android:name=".DetailsActivity"
             android:label="DetailsActivity"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.hp.pallysteve.MainActivity" />
+        </activity>
+        <activity android:name=".AdminHome"
+            android:label="AdminHome"
+            android:parentActivityName=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.hp.pallysteve.LoginActivity" />
         </activity>
     </application>
 
