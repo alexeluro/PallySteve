@@ -20,6 +20,9 @@ public class AdminViewPager extends FragmentStatePagerAdapter {
             case 0:
                 AdminTab1 adminTab1 = new AdminTab1();
                 return adminTab1;
+            case 1:
+                AdminTab22 adminTab22 = new AdminTab22();
+                return adminTab22;
             default:
                 return null;
         }

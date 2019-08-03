@@ -62,7 +62,8 @@ public class AdminTab1 extends Fragment {
 
     /**
      * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * this fragment using the
+     * ''provided parameters.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
@@ -95,13 +96,14 @@ public class AdminTab1 extends Fragment {
         userdata = new UserInfo();
         database = FirebaseDatabase.getInstance();
         dataRef = database.getReference();//.child("UserInfo")
+        View rootView = inflater.inflate(R.layout.fragment_admin_tab1, container, false);
 
-        adminCom = container.findViewById(R.id.admin_company_name);
-        adminRole = container.findViewById(R.id.admin_role_name);
-        adminLoc = container.findViewById(R.id.admin_location_name);
-        adminMinSal = container.findViewById(R.id.admin_salary_min_range);
-        adminMaxSal = container.findViewById(R.id.admin_salary_max_range);
-        uploadBtn = container.findViewById(R.id.upload_btn);
+        adminCom = rootView.findViewById(R.id.admin_company_name);
+        adminRole = rootView.findViewById(R.id.admin_role_name);
+        adminLoc = rootView.findViewById(R.id.admin_location_name);
+        adminMinSal = rootView.findViewById(R.id.admin_salary_min_range);
+        adminMaxSal = rootView.findViewById(R.id.admin_salary_max_range);
+        uploadBtn = rootView.findViewById(R.id.upload_btn);
 
 
         ArrayAdapter spinnerAdapter = ArrayAdapter.
@@ -178,8 +180,6 @@ public class AdminTab1 extends Fragment {
                         maxSal = 0;
                     }
                 }
-
-
                 dataRef.push().setValue(userdata);
 
                 adminCom.setText("");
@@ -187,14 +187,8 @@ public class AdminTab1 extends Fragment {
                 adminMinSal.setText("");
                 adminMaxSal.setText("");
                     Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
-
             }
         });
-
-
-
-
-
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_admin_tab1, container, false);

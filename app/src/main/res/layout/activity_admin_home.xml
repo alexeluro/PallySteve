@@ -33,13 +33,21 @@
         <android.support.design.widget.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/admin_tab_layout">
+            android:id="@+id/admin_tab_layout"
+            app:tabTextColor="@color/whiteText"
+            app:tabIndicator="@color/whiteText">
 
         </android.support.design.widget.TabLayout>
 
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.AppBarLayout>
 
     <include
         layout="@layout/admin_home_include"/>
 
-</android.support.design.widget.CoordinatorLayout>
+</android.support.design.widget.CoordinatorLayout> 

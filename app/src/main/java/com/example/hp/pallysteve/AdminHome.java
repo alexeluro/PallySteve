@@ -6,8 +6,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
-public class AdminHome extends AppCompatActivity implements AdminTab1.OnFragmentInteractionListener {
+public class AdminHome extends AppCompatActivity implements
+        AdminTab1.OnFragmentInteractionListener, AdminTab22.OnFragmentInteractionListener {
+
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +26,13 @@ public class AdminHome extends AppCompatActivity implements AdminTab1.OnFragment
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        TabLayout tabLayout = findViewById(R.id.admin_tab_layout);
+        tabLayout = findViewById(R.id.admin_tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Upload"));
+        tabLayout.addTab(tabLayout.newTab().setText("Uploaded Jobs"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
-        final ViewPager viewPager = findViewById(R.id.admin_view_pager);
+        viewPager = findViewById(R.id.admin_view_pager);
         AdminViewPager adminViewPager = new AdminViewPager(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adminViewPager);
         viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -44,7 +53,6 @@ public class AdminHome extends AppCompatActivity implements AdminTab1.OnFragment
 
             }
         });
-
 
 
     }

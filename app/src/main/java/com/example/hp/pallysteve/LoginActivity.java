@@ -102,27 +102,27 @@ public class LoginActivity extends AppCompatActivity {
 
     private void verifyCredentials(String email, String password) {
         progressDialog.setMessage("Verifying User Inputs");
-        progressDialog.show();
+//        progressDialog.show();
         Boolean verifiedEmail = false;
         Boolean verifiedPassword = false;
 
         //check if email emailField is empty
         if(TextUtils.isEmpty(email)){
-            progressDialog.dismiss();
+//            progressDialog.dismiss();
             Toast.makeText(this, "Input email", Toast.LENGTH_SHORT).show();
         }else{
             // check if email ends with @gmail.com or @yahoo.com
             if(email.endsWith("@gmail.com") || email.endsWith("@yahoo.com")){
                 verifiedEmail = true;
             }else{
-                progressDialog.dismiss();
+//                progressDialog.dismiss();
                 Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show();
             }
 
         }
         // check if passwordField is empty
         if(TextUtils.isEmpty(password)){
-            progressDialog.dismiss();
+//            progressDialog.dismiss();
             Toast.makeText(this, "Input password", Toast.LENGTH_SHORT).show();
         }else{
             // check if password is long enough
@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                 verifiedPassword = true;
 
             }else {
-                progressDialog.dismiss();
+//                progressDialog.dismiss();
                 Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show();
                 verifiedPassword = false;
             }
@@ -176,18 +176,18 @@ public class LoginActivity extends AppCompatActivity {
                             if(user.isEmailVerified()){
                                 progressDialog.setMessage("email verified!");
                                 Toast.makeText(LoginActivity.this, "Login Succesful", Toast.LENGTH_SHORT).show();
-                                progressDialog.dismiss();
+//                                progressDialog.dismiss();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
                             }else{
                                 progressDialog.setMessage("Email hasn't been verified");
-                                progressDialog.dismiss();
+//                                progressDialog.dismiss();
                                 Toast.makeText(LoginActivity.this, "Verify your email", Toast.LENGTH_SHORT).show();
                             }
 
                         }else{
-                            progressDialog.dismiss();
+//                            progressDialog.dismiss();
                             Toast.makeText(LoginActivity.this, "Account doesnt exist", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -196,7 +196,7 @@ public class LoginActivity extends AppCompatActivity {
                 (new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
+//                        progressDialog.dismiss();
                      Toast.makeText(LoginActivity.this, "An error occured! \nPoor Internet connection", Toast.LENGTH_LONG).show();
                     }
         });

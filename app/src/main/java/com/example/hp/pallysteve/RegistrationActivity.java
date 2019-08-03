@@ -123,7 +123,7 @@ public class RegistrationActivity extends AppCompatActivity {
             progressDialog.setMessage("Creating you account... \nPlease wait");
             FirebaseUser user = mAuth.getCurrentUser();
 
-            if(user != null){
+            if(user == null){
 
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override

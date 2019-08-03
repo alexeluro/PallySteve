@@ -54,7 +54,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         customViewHolder.role.setText(roleList.get(i));
         customViewHolder.location.setText(locationList.get(i));
         customViewHolder.salary.setText(salaryList.get(i));
-        Glide.with(context).load(R.drawable.ic_menu_gallery).into(customViewHolder.companyLogo);
+        Glide.with(context).load(R.drawable.ic_work_black_24dp).into(customViewHolder.companyLogo);
         customViewHolder.detailsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
